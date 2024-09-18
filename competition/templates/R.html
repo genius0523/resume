@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>ECharts</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.common.js"></script>
+
+  </head>
+ 
+  <body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="main0" style="width: 900px;height:600px;"></div>
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main0'));
+
+      // 指定图表的配置项和数据
+      var option = {
+  title: {
+    text: '累计收益曲线'
+  },
+  tooltip: {
+    trigger: 'axis'
+  },
+  xAxis: {
+    type: 'category',
+    data: {{ time_X | safe }}
+  },
+  yAxis: {
+    type: 'value',
+    min: {{ max_num | safe }}, 
+    max: {{ min_num | safe }}, 
+  },
+  dataZoom: [
+    {
+      type: 'inside',
+      start: 0,
+      end: 20
+    },
+    {
+      start: 0,
+      end: 0
+    }
+  ],
+  series: [
+    {
+      name:'策略收益',
+      data: {{ time_y | safe }},
+      type: 'line'
+    }
+  ]
+};
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>
